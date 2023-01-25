@@ -28,7 +28,7 @@ jobs:
         with:
           role-to-assume: arn:aws:iam::415027062036:oidc-provider/token.actions.githubusercontent.com
           role-session-name: upload-session
-          aws-region-: ${{ env.AWS_REGION }}
+          aws-region: ${{ env.AWS_REGION }}
       - name: upload build to s3 bucket
         run: |
           aws s3 sync ./build s3://${{ env.BUCKET_NAME }}/
