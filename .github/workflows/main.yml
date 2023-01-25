@@ -4,8 +4,14 @@ on:
   push:
     branches:
       - main
+env:
+  BUCKET_NAME: "williamlines.com"
+  AWS_REGION: "eu-west-2"
+permissions:
+  id-token: write
+  contents: read
 jobs:
-  build:
+  build-and-upload:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
@@ -20,8 +26,9 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: eu-west-2
-      - name: Sync S3 Bucket
-        run: aws s3 sync ./build s3://williamlines.com --delete
+          role-to-assume: arn:aws:iam::415027062036:oidc-provider/token.actions.githubusercontent.com
+          role-session-name: upload-session
+          aws-region-: ${{ env.AWS_REGION }}
+      - name: upload build to s3 bucket
+        run: |
+          aws s3 sync ./build s3://${{ env.BUCKET_NAME }}/
