@@ -19,6 +19,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 19
+      - name: Change Directory
+        run: cd react-app
       - name: Install Dependencies
         run: npm install
       - name: Build Project
