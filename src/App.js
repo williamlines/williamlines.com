@@ -5,7 +5,7 @@ import { ChakraProvider } from "@chakra-ui/react";
 function App() {
   return (
     <ChakraProvider>
-      <h1> William Lines </h1>
+      <h1> William Lines. </h1>
     </ChakraProvider>
   );
 }
